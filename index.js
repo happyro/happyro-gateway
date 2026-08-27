@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./runtime-config').writeRuntimeConfig();
 
 const express = require('express');
 const http = require('http');
