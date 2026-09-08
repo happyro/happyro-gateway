@@ -17,6 +17,7 @@
 		"extract:grf": "node tools/extract-grf.mjs",
 		"test:mojibake": "node tools/test-mojibake.mjs",
 		"test:runtime-config": "node --test test/runtime-config.test.js",
+		"test:proxy": "node --test test/http-proxy.test.js",
 		"convert:encoding": "node tools/convert-encoding.mjs"
 	},
 	"author": "Vincent Thibault",
