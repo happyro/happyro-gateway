@@ -23,7 +23,7 @@ const ENABLE_WSPROXY = process.env.ENABLE_WSPROXY === 'true';
 const ENABLE_STATIC_SERVE = process.env.ENABLE_STATIC_SERVE === 'true';
 const ESRGAN_ENABLED = process.env.ESRGAN_ENABLED === 'true';
 const ESRGAN_CACHE_DIR = process.env.ESRGAN_CACHE_DIR || './upscaled_cache';
-const ROBROWSER_PATH = process.env.ROBROWSER_PATH || '../roBrowserLegacy';
+const ROBROWSER_PATH = process.env.ROBROWSER_PATH || '../../repos/happyro-client/dist/Web';
 const ROBROWSER_PUBLIC_PATH = process.env.ROBROWSER_PUBLIC_PATH || '/';
 const RATHENA_WEB_API_URL = process.env.RATHENA_WEB_API_URL || '';
 const ADMIN_API_URL = process.env.ADMIN_API_URL || 'http://127.0.0.1:18081';
