@@ -82,6 +82,20 @@ async function startServer() {
 
   app.use(cors(corsOptions));
 
+  // Compression middleware - compresses text AND binary game assets.
+  // Registered before the proxies so proxied API responses are compressed too.
+  app.use(compression({
+    threshold: 1024,
+    filter: (req, res) => {
+      // Compress game assets (SPR, RSM, GND, etc.) that are highly compressible
+      if (COMPRESSIBLE_GAME_EXTENSIONS.test(req.path)) {
+        return true;
+      }
+      // Default compression filter for text/json/etc
+      return compression.filter(req, res);
+    }
+  }));
+
   app.use('/api/adventure-tools', createHttpProxyMiddleware({
     targetUrl: ADMIN_API_URL,
     path: request => `/api/adventure-tools${request.url}`,
@@ -114,19 +128,6 @@ async function startServer() {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  // Compression middleware - compresses text AND binary game assets
-  app.use(compression({
-    threshold: 1024,
-    filter: (req, res) => {
-      // Compress game assets (SPR, RSM, GND, etc.) that are highly compressible
-      if (COMPRESSIBLE_GAME_EXTENSIONS.test(req.path)) {
-        return true;
-      }
-      // Default compression filter for text/json/etc
-      return compression.filter(req, res);
-    }
-  }));
 
   // Debug middleware only in development
   if (!IS_PROD) {
