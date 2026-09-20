@@ -229,7 +229,7 @@ const Client = {
 
     // Check DATA_OVERRIDE_PATH (external data dir with loose files not in GRF)
     if (process.env.DATA_OVERRIDE_PATH) {
-      const relativePath = filePath.replace(/^data[\/\\]/, '');
+      const relativePath = decodeMojibake(filePath).replace(/^data[\/\\]/, '');
       for (const overrideRoot of process.env.DATA_OVERRIDE_PATH.split(path.delimiter).filter(Boolean)) {
         const overrideBase = resolveConfiguredRoot(GATEWAY_ROOT, overrideRoot);
         if (!overrideBase) continue;
