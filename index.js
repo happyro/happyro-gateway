@@ -19,6 +19,7 @@ const routes = require('./src/routes');
 const debugMiddleware = require('./src/middlewares/debugMiddleware');
 const createRawImportMiddleware = require('./src/middlewares/rawImportMiddleware');
 const { createHttpProxyMiddleware } = require('./src/middlewares/httpProxyMiddleware');
+const { createClientDiagnosticsRouter } = require('./src/routes/clientDiagnostics');
 
 const CLIENT_PUBLIC_URL = process.env.CLIENT_PUBLIC_URL || 'http://localhost:8000';
 const ENABLE_WSPROXY = process.env.ENABLE_WSPROXY === 'true';
@@ -124,6 +125,13 @@ async function startServer() {
     });
 
     logger.info(`rAthena Web API proxy enabled for ${proxyPrefixes.join(', ')}`);
+  }
+
+  app.use('/api/client-diagnostics', await createClientDiagnosticsRouter({
+    directory: process.env.CLIENT_DIAGNOSTICS_DIR,
+  }));
+  if (process.env.CLIENT_DIAGNOSTICS_DIR) {
+    logger.info(`Client diagnostics: ${path.resolve(process.env.CLIENT_DIAGNOSTICS_DIR)}`);
   }
 
   app.use(express.json());
